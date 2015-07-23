@@ -1,0 +1,15 @@
+﻿@using System.Web.Optimization
+@model AdveChan.Models.Post
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+@Scripts.Render("~/Scripts/PictureUploading.js")
+@using (Html.BeginForm("AddPost", "Thread", FormMethod.Post))
+{
+    <input type="hidden" value="@TempData["ThreadId"]" name="id" />
+    <p>Email: @Html.TextBoxFor(x => x.Email) Title: @Html.TextBoxFor(x => x.Title)</p>
+    <br><p>@Html.TextAreaFor(x => x.Content)</p>
+    <input type="file" name="image" id="pic">
+    <p><input type="button" value="Upload" id ="btnUpload"></p>
+    <br><p>@Html.TextBoxFor(x => x.ImagesUrl)</p>
+    <br><p><input type="submit" value="Send"></p>
+}

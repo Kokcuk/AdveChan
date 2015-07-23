@@ -1,0 +1,19 @@
+﻿@using AdveChan.Projections
+@model AdveChan.ViewModels.ThreadModel
+
+@{
+    ViewBag.Title = "title";   
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+<br><a href="/Board/ShowAddingNewThread">[ Add new thread ]</a>
+    @foreach (ThreadWithPosts thread in Model.Threads)
+    {
+        <p>id: @thread.Id</p>
+    <p><a href="/Thread/ShowPosts/@thread.Id">Answer</a></p>
+    <p>oppost: @thread.OpPost.Content</p>
+        foreach (var lastPost in thread.LastPosts)
+        {
+            <p>last post: @lastPost.Content</p>
+         }            
+    }
+

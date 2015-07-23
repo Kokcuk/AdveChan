@@ -1,0 +1,15 @@
+﻿@using System.Security.Cryptography.X509Certificates
+
+@{
+    ViewBag.Title = "ShowAddingNewThread";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+
+<form method="POST" action="/Thread/Create">
+    <input type="hidden" value="@TempData["BoardId"]" name="id"/>
+    <br>E-mail:<input type="text" name="email"/>
+    <br>Title:<input type="text" name="title"/>
+    <br><textarea name="content"></textarea>
+    <br>Image: <input type="text" name="url"/>
+    <br><input type="submit" value="Create"/>
+</form>

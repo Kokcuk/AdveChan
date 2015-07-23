@@ -1,0 +1,18 @@
+﻿@using System.Web.Optimization
+@using AdveChan.Models
+@model AdveChan.ViewModels.PostModel
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+@Scripts.Render("~/Scripts/PictureUploading.js")
+@{
+    ViewBag.Title = "ShowPosts";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+@foreach (var p in Model.Posts)
+{
+    <p>Email: @p.Email Title: @p.Title Time:@p.Time</p>
+    @p.Content
+    <br>
+}
+@Html.Partial("PartialViewForPosts", new Post());
+
