@@ -48,5 +48,17 @@ namespace AdveChan.Controllers
 
             return null;
         }
+
+        public ActionResult AddAdmin()
+        {
+            var admin = new Admin
+            {
+                Login = "Ru",
+                Password = "1234"
+            };
+            _chanContext.Admins.Add(admin);
+            _chanContext.SaveChanges();
+            return null;
+        }
     }
 }

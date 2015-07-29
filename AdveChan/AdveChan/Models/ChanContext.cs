@@ -12,6 +12,8 @@ namespace AdveChan.Models
         public DbSet<Board> Boards { get; set; }
         public DbSet<Thread> Threads { get; set; } 
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Ban> Bans { get; set; }
 
         public ChanContext()
         {

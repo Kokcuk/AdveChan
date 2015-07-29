@@ -48,6 +48,12 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -122,12 +128,29 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\OpenImage.js" />
     <Content Include="Scripts\PictureUpoading.js" />
+    <Content Include="Fancybox\blank.gif" />
+    <Content Include="Fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Fancybox\fancybox_loading.gif" />
+    <Content Include="Fancybox\fancybox_overlay.png" />
+    <Content Include="Fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Fancybox\fancybox_sprite.png" />
+    <Content Include="Fancybox\helpers\fancybox_buttons.png" />
+    <Content Include="Fancybox\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Fancybox\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Fancybox\helpers\jquery.fancybox-media.js" />
+    <Content Include="Fancybox\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Fancybox\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Fancybox\jquery.fancybox.css" />
+    <Content Include="Fancybox\jquery.fancybox.js" />
+    <Content Include="Fancybox\jquery.fancybox.pack.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\CustomAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\StartPageController.cs" />
@@ -145,7 +168,17 @@
     <Compile Include="Migrations\201507182015240_Migration1.Designer.cs">
       <DependentUpon>201507182015240_Migration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507282249437_BanAdmin290715.cs" />
+    <Compile Include="Migrations\201507282249437_BanAdmin290715.Designer.cs">
+      <DependentUpon>201507282249437_BanAdmin290715.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507291742206_Admin290715.cs" />
+    <Compile Include="Migrations\201507291742206_Admin290715.Designer.cs">
+      <DependentUpon>201507291742206_Admin290715.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Ban.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\ChanContext.cs" />
     <Compile Include="Models\EntityBase.cs" />
@@ -153,8 +186,10 @@
     <Compile Include="Models\Thread.cs" />
     <Compile Include="Projections\ThreadWithPosts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AddPostModel.cs" />
+    <Compile Include="ViewModels\AddThreadModel.cs" />
     <Compile Include="ViewModels\BoardModel.cs" />
-    <Compile Include="ViewModels\PostModel.cs" />
+    <Compile Include="ViewModels\ShowPostsModel.cs" />
     <Compile Include="ViewModels\ThreadModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,8 +200,6 @@
     <Content Include="Views\Board\ShowThreads.cshtml" />
     <Content Include="Views\Board\ShowAddingNewThread.cshtml" />
     <Content Include="Views\Thread\ShowPosts.cshtml" />
-    <Content Include="Views\Thread\PartialViewForPosts.cshtml" />
-    <Content Include="Views\Thread\PartialViewForPictures.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -187,6 +220,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507182015240_Migration1.resx">
       <DependentUpon>201507182015240_Migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507282249437_BanAdmin290715.resx">
+      <DependentUpon>201507282249437_BanAdmin290715.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507291742206_Admin290715.resx">
+      <DependentUpon>201507291742206_Admin290715.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

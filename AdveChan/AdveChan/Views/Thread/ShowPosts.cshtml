@@ -1,18 +1,36 @@
 ﻿@using System.Web.Optimization
 @using AdveChan.Models
-@model AdveChan.ViewModels.PostModel
+@model AdveChan.ViewModels.ShowPostsModel
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
-@Scripts.Render("~/Scripts/PictureUploading.js")
+<link rel="stylesheet" href="../../Fancybox/jquery.fancybox.css" type="text/css" media="screen"/>
+<script type="text/javascript" src="../../Fancybox/jquery.fancybox.pack.js"></script>
+<script src="../../Scripts/PictureUpoading.js"></script>
+<script src="../../Scripts/OpenImage.js"></script>
 @{
     ViewBag.Title = "ShowPosts";
     Layout = "~/Views/_BasicLayout.cshtml";
 }
 @foreach (var p in Model.Posts)
 {
-    <p>Email: @p.Email Title: @p.Title Time:@p.Time</p>
-    @p.Content
-    <br>
+    string url = p.ImagesUrl;
+    if (url != null)
+    {
+        url = p.ImagesUrl.Remove(24, 6);
+    }
+    else{ url = null;}
+        <p><a class="fancybox" href="@url"><img src="@p.ImagesUrl" alt="@p.ImagesUrl" /></a>Email: @p.Email Title: @p.Title Time:@p.Time</p>
+        @p.Content
+        <br>
 }
-@Html.Partial("PartialViewForPosts", new Post());
 
+@using (Html.BeginForm("AddPost", "Thread", FormMethod.Post))
+{
+    <input type="hidden" value="@Model.ThreadId" name="ThreadId" />
+    <p>Email: <input type="text" name="Email" id="Email"> Title: <input type="text" name="Title" id="Title"> </p>
+    <br><p><textarea name="Content" id="Content"></textarea></p>
+    <input type="file" name="image" id="pic">
+    <p><input type="button" value="Upload" id="btnUpload"></p>
+    <input type="hidden" value="" id="imgsrc" name="imgsrc">
+    <br><p><input type="submit" value="Send"></p>
+}

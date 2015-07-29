@@ -1,19 +1,39 @@
-﻿@using AdveChan.Projections
+﻿@using System
+@using System.Web.Optimization
+@using AdveChan.Projections
 @model AdveChan.ViewModels.ThreadModel
-
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+<link rel="stylesheet" href="../../Fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Fancybox/jquery.fancybox.pack.js"></script>
+<script src="../../Scripts/OpenImage.js"></script>
 @{
     ViewBag.Title = "title";   
     Layout = "~/Views/_BasicLayout.cshtml";
 }
-<br><a href="/Board/ShowAddingNewThread">[ Add new thread ]</a>
+
+<br><a href="/Board/ShowAddingNewThread/">[ Add new thread ]</a>
     @foreach (ThreadWithPosts thread in Model.Threads)
     {
+        string url = String.Empty;
+        if (thread.OpPost.ImagesUrl != null)
+        {url = thread.OpPost.ImagesUrl.Remove(24,6);}
         <p>id: @thread.Id</p>
-    <p><a href="/Thread/ShowPosts/@thread.Id">Answer</a></p>
-    <p>oppost: @thread.OpPost.Content</p>
+        <p><a href="/Thread/ShowPosts/@thread.Id">Answer</a></p>
+        <p><a class="fancybox" href="@url"><img src="@thread.OpPost.ImagesUrl" alt="@thread.OpPost.ImagesUrl" /></a></p>
+        <p>oppost: @thread.OpPost.Content</p>
         foreach (var lastPost in thread.LastPosts)
         {
-            <p>last post: @lastPost.Content</p>
-         }            
+            if (lastPost.Id != thread.OpPost.Id)
+            {
+                string innerurl = String.Empty;
+                if (lastPost.ImagesUrl != null)
+                {
+                    innerurl = lastPost.ImagesUrl.Remove(24, 6); }
+                <p>last post:<a class="fancybox" href="@innerurl"><img src="@lastPost.ImagesUrl" alt="@lastPost.ImagesUrl"></a></p>
+                <br>
+                @lastPost.Content
+            }
+        }            
     }
 

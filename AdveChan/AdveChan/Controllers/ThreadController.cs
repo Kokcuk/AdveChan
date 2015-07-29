@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AdveChan.Attributes;
 using AdveChan.Models;
 using AdveChan.ViewModels;
 
@@ -18,68 +19,141 @@ namespace AdveChan.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(int id, string email, string title, string content, string url)
+        public ActionResult Create(AddThreadModel model)
         {
-            var board = _chanContext.Boards.FirstOrDefault(x => x.Id == id);
-            var thread = new Thread
+            if (CheckForBan(Request.UserHostAddress))
             {
-                BoardId = id,
-                Board = board,
-                Posts = new List<Post>()
-            };
-            thread.Posts.Add(new Post
-            {
-                ThreadId = thread.Id,
-                Email = email,
-                Title = title,
-                Time = DateTime.Now,
-                ImagesUrl = url,
-                Content = content
-            });
-            _chanContext.Threads.Add(thread);
-            _chanContext.SaveChanges();
-            return Redirect("/Board/ShowThreads/" + id);
+                var board = _chanContext.Boards.FirstOrDefault(x => x.Id == model.BoardId);
+                var thread = new Thread
+                {
+                    BoardId = model.BoardId,
+                    Board = board,
+                    Posts = new List<Post>()
+                };
+                var url = model.Imgsrc;
+                if (url != null) url = url.Remove(0, 1);
+                thread.Posts.Add(new Post
+                {
+                    ThreadId = thread.Id,
+                    Email = model.Email,
+                    Title = model.Title,
+                    Time = DateTime.Now,
+                    ImagesUrl = url,
+                    Content = model.Content,
+                    Ip = Request.UserHostAddress
+                });
+                _chanContext.Threads.Add(thread);
+                _chanContext.SaveChanges();
+            }
+            return Redirect("/Board/ShowThreads/" + model.BoardId);
         }
 
         public ActionResult ShowPosts(int id)
         {
-            TempData["ThreadId"] = id;
             List < Post > posts= _chanContext.Posts.Where(x => x.ThreadId == id).ToList();
-            var model = new PostModel
+            var model = new ShowPostsModel
             {
-                Posts = posts
+                Posts = posts,
+                ThreadId = id
             };
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult AddPost(int id, Post post, HttpPostedFileBase image)
+        public ActionResult AddPost(AddPostModel model)
         {
-            var thread = _chanContext.Threads.FirstOrDefault(x => x.Id == id);
-            var newPost = AddingPost(post, thread);
-            var amountOfPosts = _chanContext.Posts.Where(x => x.ThreadId == thread.Id).Count();
-            if (amountOfPosts > 500||post.Title=="sage")
-            {               
-                newPost.Time=new DateTime(2000,01,01,11,11,11);
+            if (CheckForBan(Request.UserHostAddress))
+            {
+                var url = model.Imgsrc;
+                if (url != null) url = url.Remove(0, 1);
+                var post = new Post
+                {
+                    ThreadId = model.ThreadId,
+                    Content = model.Content,
+                    Email = model.Email,
+                    ImagesUrl = url,
+                    Time = DateTime.Now,
+                    Title = model.Title,
+                    Ip = Request.UserHostAddress
+                };
+                var amountOfPosts = _chanContext.Posts.Count(x => x.ThreadId == model.ThreadId);
+                if (amountOfPosts > 500 || model.Title == "sage")
+                {
+                    post.Time = new DateTime(2000, 01, 01, 11, 11, 11);
+                }
+                _chanContext.Posts.Add(post);
+                _chanContext.SaveChanges();
             }
-            _chanContext.Posts.Add(newPost);
-            _chanContext.SaveChanges();
-            return Redirect("/Thread/ShowPosts/" + id);
+            return RedirectToAction("ShowPosts", "Thread", new {id = model.ThreadId});
         }
 
-        private Post AddingPost(Post post, Thread thread)
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public ActionResult DeleteThread(int id)
         {
-            var retPost = new Post
+            Thread threadToDelete = _chanContext.Threads.FirstOrDefault(x => x.Id == id);
+            var boardId = threadToDelete.BoardId;
+            _chanContext.Threads.Remove(threadToDelete);
+
+            return Redirect("Board/ShowThreads"+boardId);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public ActionResult DeletePost(int id)
+        {
+            var postToDelete = _chanContext.Posts.FirstOrDefault(x => x.Id == id);
+            var threadId = postToDelete.ThreadId;
+            _chanContext.Posts.Remove(postToDelete);
+
+            return RedirectToAction("ShowPosts", "Thread", new {id = threadId});
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult AddBan(string ip, string terms)
+        {
+            DateTime period;
+            switch (terms)
             {
-                Thread = thread,
-                ThreadId = post.ThreadId,
-                Email = post.Email,
-                Title = post.Title,
-                Time = DateTime.Now,
-                ImagesUrl = post.ImagesUrl,
-                Content = post.Content
-            };
-            return retPost;
+                case "day":
+                    period = DateTime.Now.AddDays(1);
+                    break;
+                case "week":
+                    period = DateTime.Now.AddDays(7);
+                    break;
+                case "month":
+                    period = DateTime.Now.AddDays(30);
+                    break;
+                case "year":
+                    period = DateTime.Now.AddDays(365);
+                    break;
+                default:
+                    period = DateTime.Now.AddHours(1);
+                    break;
+            }
+            _chanContext.Bans.Add(new Ban
+            {
+                IpAdress = ip,
+                Terms = period
+            });
+            _chanContext.SaveChanges();
+            return Redirect("StartPage/ShowStartPage");
+        }
+
+        private bool CheckForBan(string ip)
+        {
+            var isBanned = _chanContext.Bans.FirstOrDefault(x => x.IpAdress == ip);
+            if (isBanned == null)
+            {
+                return true;
+            }
+            if (isBanned.Terms <= DateTime.Now)
+            {
+                _chanContext.Bans.Remove(isBanned);
+                return true;
+            }
+            return false;
         }
     }
 }

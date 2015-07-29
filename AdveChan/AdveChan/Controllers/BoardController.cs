@@ -27,7 +27,7 @@ namespace AdveChan.Controllers
                 {
                     Id = x.Id,
                     LastPosts = x.Posts.OrderBy(p => p.Time).Take(3).ToList(),
-                    OpPost = x.Posts.OrderByDescending(p => p.Time).Take(1).FirstOrDefault(),
+                    OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
                     Update = x.Posts.OrderByDescending(p=>p.Time).Take(1).FirstOrDefault().Time
                 }).OrderByDescending(x=>x.Update).ToList();
             var model = new ThreadModel

@@ -1,15 +1,20 @@
 ﻿@using System.Security.Cryptography.X509Certificates
+@using System.Web.Optimization
 
 @{
     ViewBag.Title = "ShowAddingNewThread";
     Layout = "~/Views/_BasicLayout.cshtml";
 }
-
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+<script src="../../Scripts/PictureUpoading.js"></script>
 <form method="POST" action="/Thread/Create">
-    <input type="hidden" value="@TempData["BoardId"]" name="id"/>
+    <input type="hidden" value="@TempData["BoardId"]" name="BoardId"/>
     <br>E-mail:<input type="text" name="email"/>
     <br>Title:<input type="text" name="title"/>
     <br><textarea name="content"></textarea>
-    <br>Image: <input type="text" name="url"/>
+    <input type="file" name="image" id="pic">
+    <p><input type="button" value="Upload" id="btnUpload"></p>
+    <input type="hidden" value="" id="imgsrc" name="imgsrc">
     <br><input type="submit" value="Create"/>
 </form>

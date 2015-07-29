@@ -6,8 +6,9 @@ using AdveChan.Models;
 
 namespace AdveChan.ViewModels
 {
-    public class PostModel
+    public class ShowPostsModel
     {
+        public int ThreadId { get; set; }
         public List<Post> Posts { get; set; } 
     }
 }

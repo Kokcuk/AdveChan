@@ -14,5 +14,6 @@ namespace AdveChan.Models
         public DateTime Time { get; set; }
         public string ImagesUrl { get; set; }
         public string Content { get; set; }
+        public string Ip { get; set; }
     }
 }

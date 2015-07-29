@@ -36,3 +36,9 @@ D:\everything\Repository\AdveChan\AdveChan\bin\WebGrease.dll
 D:\everything\Repository\AdveChan\AdveChan\bin\Antlr3.Runtime.pdb
 D:\everything\Repository\AdveChan\AdveChan\bin\Newtonsoft.Json.xml
 D:\everything\Repository\AdveChan\AdveChan\bin\System.Web.Optimization.xml
+D:\everything\Repository\AdveChan\AdveChan\bin\Microsoft.AspNet.Identity.Core.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\Microsoft.AspNet.Identity.Core.xml
+D:\everything\Repository\AdveChan\AdveChan\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\everything\Repository\AdveChan\AdveChan\obj\Debug\AdveChan.Migrations.BanAdmin290715.resources
+D:\everything\Repository\AdveChan\AdveChan\obj\Debug\AdveChan.Migrations.Admin290715.resources

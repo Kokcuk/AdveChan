@@ -16,7 +16,7 @@ namespace AdveChan.Controllers
         [HttpPost]
         public ActionResult LoadingPicture(HttpPostedFileBase image)
         {
-            if (image!=null)
+            if (image != null)
             {
                 try
                 {
@@ -33,16 +33,16 @@ namespace AdveChan.Controllers
                     var filePathThumb = string.Format(@"{0}\{1}", path, fileNameThumb);
                     var imagefileBig = Image.FromStream(file.InputStream);
                     var imagefileThumb = ImageHelper.MakeThumb(imagefileBig, 240, 136);
-                    imagefileBig.Save(filePath,ImageFormat.Jpeg);
-                    imagefileThumb.Save(filePathThumb,ImageFormat.Jpeg);
+                    imagefileBig.Save(filePath, ImageFormat.Jpeg);
+                    imagefileThumb.Save(filePathThumb, ImageFormat.Jpeg);
                     TempData["ImageUrl"] = filePath;
-                   // return Content(String.Format("/Images/{0}/{1}",directoryName,fileNameThumb));
-                    return null;
+                    return Content(String.Format("/Images/{0}/{1}", directoryName, fileNameThumb));
+                    //return null;
                 }
                 catch (Exception exception)
                 {
 
-                  //  return Content("Error while loading picture");
+                    //  return Content("Error while loading picture");
                     return null;
                 }
             }
