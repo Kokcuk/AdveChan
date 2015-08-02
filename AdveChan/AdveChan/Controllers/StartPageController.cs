@@ -34,10 +34,6 @@ namespace AdveChan.Controllers
             {
                 FormsAuthentication.SetAuthCookie(username,false);
             } 
-            //var admin = _chanContext.Admins.FirstOrDefault(x => x.Login == login);
-            //if (admin.Password==password)
-            //{ HttpContext.Response.Cookies.Set(new HttpCookie("Role","Admin"));}
-            
             return RedirectToAction("ShowStartPage", "StartPage");
         }
 

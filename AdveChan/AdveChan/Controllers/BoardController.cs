@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using AdveChan.Models;
 using AdveChan.ViewModels;
+using PagedList;
 
 namespace AdveChan.Controllers
 {
@@ -26,13 +27,15 @@ namespace AdveChan.Controllers
                 .Where(x => x.BoardId == id).Select(x => new ThreadWithPosts
                 {
                     Id = x.Id,
-                    LastPosts = x.Posts.OrderBy(p => p.Time).Take(3).ToList(),
+                    LastPosts = x.Posts.OrderByDescending(p => p.Time).Take(3).ToList(),
                     OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
                     Update = x.Posts.OrderByDescending(p=>p.Time).Take(1).FirstOrDefault().Time
                 }).OrderByDescending(x=>x.Update).ToList();
+            
             var model = new ThreadModel
             {
-                Threads = threadsWithPost
+                Threads = threadsWithPost,
+                BoardsName = _chanContext.Boards.Where(x=>x.Id==id).Select(x=>x.Name).FirstOrDefault()
             };
             return View(model);
         }

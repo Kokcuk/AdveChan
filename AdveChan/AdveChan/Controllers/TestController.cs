@@ -54,7 +54,8 @@ namespace AdveChan.Controllers
             var admin = new Admin
             {
                 Login = "Ru",
-                Password = "1234"
+                Password = "1234",
+                Role = "Admin"
             };
             _chanContext.Admins.Add(admin);
             _chanContext.SaveChanges();

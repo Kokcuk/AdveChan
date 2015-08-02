@@ -10,5 +10,6 @@ namespace AdveChan.ViewModels
     public class ThreadModel
     {
         public List<ThreadWithPosts> Threads { get; set; }
+        public string BoardsName { get; set; }
     }
 }

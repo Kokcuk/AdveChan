@@ -88,25 +88,27 @@ namespace AdveChan.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
+        [HttpPost]
         public ActionResult DeleteThread(int id)
         {
             Thread threadToDelete = _chanContext.Threads.FirstOrDefault(x => x.Id == id);
             var boardId = threadToDelete.BoardId;
             _chanContext.Threads.Remove(threadToDelete);
+            _chanContext.SaveChanges();
 
             return Redirect("Board/ShowThreads"+boardId);
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
+        [HttpPost]
         public ActionResult DeletePost(int id)
         {
             var postToDelete = _chanContext.Posts.FirstOrDefault(x => x.Id == id);
             var threadId = postToDelete.ThreadId;
             _chanContext.Posts.Remove(postToDelete);
+            _chanContext.SaveChanges();
 
-            return RedirectToAction("ShowPosts", "Thread", new {id = threadId});
+            return Redirect("/Thread/ShowPosts/"+threadId);
         }
 
         [Authorize(Roles = "Admin")]

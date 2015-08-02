@@ -7,33 +7,38 @@
 <link rel="stylesheet" href="../../Fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="../../Fancybox/jquery.fancybox.pack.js"></script>
 <script src="../../Scripts/OpenImage.js"></script>
+<link href="@Url.Content("~/Content/ThreadsStyle.css")" rel="stylesheet" type="text/css">
 @{
-    ViewBag.Title = "title";   
+    ViewBag.Title = "title";
     Layout = "~/Views/_BasicLayout.cshtml";
 }
-
-<br><a href="/Board/ShowAddingNewThread/">[ Add new thread ]</a>
-    @foreach (ThreadWithPosts thread in Model.Threads)
+<h1 align="center">@Model.BoardsName</h1>
+<br><div class="newthread"><a class="AddingNewThread" href="/Board/ShowAddingNewThread/">[ Add new thread ]</a></div>
+@foreach (ThreadWithPosts thread in Model.Threads)
+{
+    thread.LastPosts.Reverse();
+    string url = String.Empty;
+    if (thread.OpPost.ImagesUrl != null)
+    { url = thread.OpPost.ImagesUrl.Remove(thread.OpPost.ImagesUrl.IndexOf("_thumb"), "_thumb".Length); }
+    <div class="OpPost">
+        <p> E-mail: @thread.OpPost.Email Title:@thread.OpPost.Title #@thread.OpPost.Id Time: @thread.OpPost.Time<a class="answer" href="/Thread/ShowPosts/@thread.Id"> [Answer]</a></p>
+        <p><a class="fancybox" href="@url"><img src="@thread.OpPost.ImagesUrl" align="top" /></a> @thread.OpPost.Content</p>
+    </div>
+    foreach (var lastPost in thread.LastPosts)
     {
-        string url = String.Empty;
-        if (thread.OpPost.ImagesUrl != null)
-        {url = thread.OpPost.ImagesUrl.Remove(24,6);}
-        <p>id: @thread.Id</p>
-        <p><a href="/Thread/ShowPosts/@thread.Id">Answer</a></p>
-        <p><a class="fancybox" href="@url"><img src="@thread.OpPost.ImagesUrl" alt="@thread.OpPost.ImagesUrl" /></a></p>
-        <p>oppost: @thread.OpPost.Content</p>
-        foreach (var lastPost in thread.LastPosts)
+        if (lastPost.Id != thread.OpPost.Id)
         {
-            if (lastPost.Id != thread.OpPost.Id)
+            string innerurl = String.Empty;
+            if (lastPost.ImagesUrl != null)
             {
-                string innerurl = String.Empty;
-                if (lastPost.ImagesUrl != null)
-                {
-                    innerurl = lastPost.ImagesUrl.Remove(24, 6); }
-                <p>last post:<a class="fancybox" href="@innerurl"><img src="@lastPost.ImagesUrl" alt="@lastPost.ImagesUrl"></a></p>
-                <br>
-                @lastPost.Content
+                innerurl = lastPost.ImagesUrl.Remove(lastPost.ImagesUrl.IndexOf("_thumb"), "_thumb".Length);
             }
-        }            
+            <div class="lastposts">
+                E-mail:@lastPost.Email Title:@lastPost.Title #@lastPost.Id Time: @thread.OpPost.Time
+                <p><a class="fancybox" href="@innerurl"><img src="@lastPost.ImagesUrl" align="top"></a> <div class="Content">@lastPost.Content</div></p>
+
+            </div>
+        }
     }
+}
 

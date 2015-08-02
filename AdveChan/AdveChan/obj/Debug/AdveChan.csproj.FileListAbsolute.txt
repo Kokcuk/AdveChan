@@ -42,3 +42,7 @@ D:\everything\Repository\AdveChan\AdveChan\bin\Microsoft.AspNet.Identity.Core.xm
 D:\everything\Repository\AdveChan\AdveChan\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\everything\Repository\AdveChan\AdveChan\obj\Debug\AdveChan.Migrations.BanAdmin290715.resources
 D:\everything\Repository\AdveChan\AdveChan\obj\Debug\AdveChan.Migrations.Admin290715.resources
+D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.Mvc.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.xml
+D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.Mvc.xml

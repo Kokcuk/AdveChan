@@ -1,0 +1,22 @@
+﻿
+.answer{
+    text-align: center;
+}
+div.OpPost {
+    left: 20px;
+}
+div.lastposts {
+    background-color: #fff0f5;
+    border: 1px solid black;
+    margin-left: 50px;
+    margin-right:400px;
+    padding-left: 20px;
+    padding-top: 2px;
+}
+div.Content {    
+    margin-left: 50px;
+    margin-top: 20px;
+}
+div.newthread {
+    text-align: center;
+}
