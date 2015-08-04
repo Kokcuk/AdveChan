@@ -1,0 +1,20 @@
+﻿@model MVC_Chat.Models.User
+@{
+    ViewBag.Title = "Registration";
+}
+<div>
+    <h2>Registration</h2>
+    @using (Html.BeginForm("Registration", "Check"))
+    {
+        @Html.ValidationSummary()
+        <h3>Please, fill these fields</h3>
+        <p>Input your login:</p>
+        @Html.TextBoxFor(x=>x.Nickname)
+        <p>Input your password:</p>
+        @Html.PasswordFor(x=>x.Password)
+        <p>Input your e-mail:</p>
+        @Html.TextBoxFor(x=>x.Email)
+        <p></p>
+        <button type="submit">Confirm</button>
+    }
+</div>

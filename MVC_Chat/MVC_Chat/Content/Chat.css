@@ -1,0 +1,13 @@
+﻿body {
+    background-color: #00ced1;
+}
+div {
+    background-color: #b0e0e6;
+}
+div.list {
+    color: indigo;
+}
+    div.messages {
+        border-left: 2px solid black;
+        padding-left: 10px;
+    }

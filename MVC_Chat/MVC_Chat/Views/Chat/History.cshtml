@@ -1,0 +1,26 @@
+﻿@using MVC_Chat.Models
+@model ChatModel
+           <link href="@Url.Content("~/Content/History.css")" rel="stylesheet" type="text/css">
+<div id="Members">
+<p class="members"><b>There are: @Model.Members.Count users</b></p>
+@foreach (var mmbr in Model.Members)
+{
+    <p class="members">@mmbr.Name</p>
+}
+    </div>
+<div class="msg" id="Messages">
+@foreach (var msg in Model.Messages)
+{
+    <p>
+    @msg.Date<br />
+    @if (msg.Member != null)
+    {
+        <b>@(msg.Member.Name+":")</b>@msg.Text
+    }
+    else
+    {
+        <span class="serverMes">@msg.Text</span>
+    }
+        </p>
+}
+</div>

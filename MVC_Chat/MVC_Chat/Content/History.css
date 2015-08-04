@@ -1,0 +1,11 @@
+﻿P.members {
+    color: black;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+}
+div.count {
+    color: red;
+}
+div.msg {
+    overflow-y: scroll;
+}

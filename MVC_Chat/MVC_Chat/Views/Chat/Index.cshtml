@@ -1,0 +1,36 @@
+﻿@using System.Web.Optimization
+@model MVC_Chat.Models.ChatModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>MVC CHAT</title>
+
+    <link href="@Url.Content("~/Content/Chat.css")" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="list" id="Username">
+</div>
+<div id="LastRefresh">
+</div>
+<div class="messages" id="container">
+    <div id="loginBlock">
+        <input type="text" id="txtUserName" value="@ViewData["nick"]">
+        <button id="btnLogin" value="Enter">Enter</button>
+    </div>
+</div>
+<div id="Error">
+</div>
+@Ajax.ActionLink("Login","Index", new {member=""},
+new AjaxOptions{UpdateTargetId = "container", OnFailure = "LoginOnFailure", OnSuccess = "LoginOnSuccess"},
+new {@id="LoginButton", @style="visibility: hidden;"})
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/Scripts/chatv2.js")
+</body>
+</html>
+
