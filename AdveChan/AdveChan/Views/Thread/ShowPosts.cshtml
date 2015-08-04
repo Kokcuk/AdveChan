@@ -15,6 +15,17 @@
         document.getElementById(E).style.color = "mediumblue";
     }
 </script>
+<script type="text/javascript">
+    function CreateLinks(target, attr, value) {
+        var ahref = document.createElement("a");
+        ahref.setAttribute("href", "#" + attr);
+        ahref.setAttribute("id", "scroll");
+        var t = document.createTextNode(value+" ");
+        ahref.appendChild(t);
+        document.getElementById(target).appendChild(ahref);
+
+    }
+</script>
 @{
     ViewBag.Title = "ShowPosts";
     Layout = "~/Views/_BasicLayout.cshtml";
@@ -33,12 +44,22 @@
     <div class="posts" id="@p.Id">
         <p>Email:@p.Email Title:@p.Title <a name="@p.Id" href="#" onclick="document.getElementById('txtAreaContent').innerHTML +='>>'+this.name">@p.Id</a> Time:@p.Time</p>
         <p id="@p.Id"><a class="fancybox" href="@url"><img src="@p.ImagesUrl" align="top"/></a>@foreach (var mt in matches)
-                                                                                    {
-                                                                                        var postId=mt.ToString().Remove(0,2);
-                                                                                        var show = postId + "s";
-                                                                                        <a id="scroll" href="#@postId" class="link" onclick="ChangeStyle('@postId')">@mt.ToString()</a>
-                                                                                        <div id="@show" class="hid"></div>
-                                                                                    } @p.Content</p>
+                                                                                               {
+                                                                                                   var postId = mt.ToString().Remove(0, 2);
+                                                                                                   var show = postId + "s";
+                                                                                                   <a id="scroll" href="#@postId" class="link" onclick="ChangeStyle('@postId')">@mt.ToString()</a>
+                                                                                                   <div id="@show" class="hid"></div>
+                                                                                               } @p.Content</p>@{
+                                                                                                                   var answers = p.Id + "a";
+                                                                                                                   var ss = p.Id + "ss";
+                                                                                                                    <div id="@answers"></div><div id="@ss" class="hid"></div>}
+        @{
+            foreach (var etopizdec in matches)
+            {
+                var kek = etopizdec.ToString();
+                p.Content += kek;
+            }
+        }
     </div>        
     if (User.IsInRole("Admin"))
     {
@@ -62,6 +83,20 @@
             <input type="submit" value="Ban">
             </p>
             </div>            
+        }
+    }
+}
+@{
+    //Model.Posts.Reverse();
+    foreach (var post in Model.Posts)
+    {
+        Regex reg = new Regex(@">>[0-9]+", RegexOptions.IgnoreCase);
+        MatchCollection matches = reg.Matches(post.Content);
+        foreach (var match in matches)
+        {
+            var postId = match.ToString().Remove(0, 2);
+            var target = postId + "a";
+            <script type="text/javascript">CreateLinks('@target', '@post.Id', '@post.Id')</script>
         }
     }
 }

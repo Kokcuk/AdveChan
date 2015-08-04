@@ -20,8 +20,10 @@ namespace AdveChan.Controllers
             _chanContext = new ChanContext();
         }
 
-        public ActionResult ShowThreads(int id)
+        public ActionResult ShowThreads(int id, int? page)
         {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
             TempData["BoardId"] = id;
             List<ThreadWithPosts> threadsWithPost = _chanContext.Threads
                 .Where(x => x.BoardId == id).Select(x => new ThreadWithPosts
@@ -31,12 +33,17 @@ namespace AdveChan.Controllers
                     OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
                     Update = x.Posts.OrderByDescending(p=>p.Time).Take(1).FirstOrDefault().Time
                 }).OrderByDescending(x=>x.Update).ToList();
-            
+            if (page > 0 && page < 5)
+            {
+                if (threadsWithPost.Count()>page*pageSize)
+                threadsWithPost.RemoveRange((int)(page*pageSize-pageSize),pageSize);
+            }
             var model = new ThreadModel
             {
-                Threads = threadsWithPost,
+                Threads = threadsWithPost.Take(10).ToList(),
                 BoardsName = _chanContext.Boards.Where(x=>x.Id==id).Select(x=>x.Name).FirstOrDefault()
             };
+            
             return View(model);
         }
 

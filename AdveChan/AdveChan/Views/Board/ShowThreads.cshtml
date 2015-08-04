@@ -35,10 +35,13 @@
             }
             <div class="lastposts">
                 E-mail:@lastPost.Email Title:@lastPost.Title #@lastPost.Id Time: @thread.OpPost.Time
-                <p><a class="fancybox" href="@innerurl"><img src="@lastPost.ImagesUrl" align="top"></a> <div class="Content">@lastPost.Content</div></p>
+                <p><a class="fancybox" href="@innerurl"><img src="@lastPost.ImagesUrl" align="top"></a>
+                    <div class="Content">@lastPost.Content</div>
+                </p>
 
             </div>
         }
     }
 }
+<p>[<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "0"})>0</a>][<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "1"})>1</a>][<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "2"})>2</a>][<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "3"})>3</a>][<a href=@Url.Action("ShowThreads","Board",new{id=TempData["BoardId"], page="4"})>4</a>]</p>
 

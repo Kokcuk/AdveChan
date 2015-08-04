@@ -16,5 +16,5 @@ div.admin {
 }
 .hid {
     display: none;
-    background-color: lightsalmon;
+    position: absolute;
 }
