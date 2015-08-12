@@ -38,8 +38,16 @@
                 <p><a class="fancybox" href="@innerurl"><img src="@lastPost.ImagesUrl" align="top"></a>
                     <div class="Content">@lastPost.Content</div>
                 </p>
-
+                
             </div>
+        }
+    }
+    if (User.IsInRole("Admin"))
+    {
+        using (Html.BeginForm("DeleteThread", "Thread", FormMethod.Post))
+        {
+            <input type="hidden" name="id" value="@thread.Id">
+            <input type="submit" value="Delete">
         }
     }
 }

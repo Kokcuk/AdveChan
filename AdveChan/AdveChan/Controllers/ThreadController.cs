@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AdveChan.Attributes;
 using AdveChan.Models;
 using AdveChan.ViewModels;
+using BotDetect.Web.UI.Mvc;
 
 namespace AdveChan.Controllers
 {
@@ -19,6 +19,7 @@ namespace AdveChan.Controllers
         }
 
         [HttpPost]
+        [CaptchaValidation("CaptchaCode", "SampleCaptcha", "Incorrect CAPTCHA code!")]
         public ActionResult Create(AddThreadModel model)
         {
             if (CheckForBan(Request.UserHostAddress))
@@ -60,31 +61,39 @@ namespace AdveChan.Controllers
         }
 
         [HttpPost]
+        [CaptchaValidation("CaptchaCode","SampleCaptcha","Incorrect CAPTCHA code!")]
         public ActionResult AddPost(AddPostModel model)
         {
-            if (CheckForBan(Request.UserHostAddress))
+            if (!ModelState.IsValid)
             {
-                var url = model.Imgsrc;
-                if (url != null) url = url.Remove(0, 1);
-                var post = new Post
-                {
-                    ThreadId = model.ThreadId,
-                    Content = model.Content,
-                    Email = model.Email,
-                    ImagesUrl = url,
-                    Time = DateTime.Now,
-                    Title = model.Title,
-                    Ip = Request.UserHostAddress
-                };
-                var amountOfPosts = _chanContext.Posts.Count(x => x.ThreadId == model.ThreadId);
-                if (amountOfPosts > 500 || model.Title == "sage")
-                {
-                    post.Time = new DateTime(2000, 01, 01, 11, 11, 11);
-                }
-                _chanContext.Posts.Add(post);
-                _chanContext.SaveChanges();
+                return RedirectToAction("ShowPosts", "Thread", new {id = model.ThreadId});
             }
-            return RedirectToAction("ShowPosts", "Thread", new {id = model.ThreadId});
+            else
+            {
+                if (CheckForBan(Request.UserHostAddress))
+                {
+                    var url = model.Imgsrc;
+                    if (url != null) url = url.Remove(0, 1);
+                    var post = new Post
+                    {
+                        ThreadId = model.ThreadId,
+                        Content = model.Content,
+                        Email = model.Email,
+                        ImagesUrl = url,
+                        Time = DateTime.Now,
+                        Title = model.Title,
+                        Ip = Request.UserHostAddress
+                    };
+                    var amountOfPosts = _chanContext.Posts.Count(x => x.ThreadId == model.ThreadId);
+                    if (amountOfPosts > 500 || model.Title == "sage")
+                    {
+                        post.Time = new DateTime(2000, 01, 01, 11, 11, 11);
+                    }
+                    _chanContext.Posts.Add(post);
+                    _chanContext.SaveChanges();
+                }
+                return RedirectToAction("ShowPosts", "Thread", new {id = model.ThreadId});
+            }
         }
 
         [Authorize(Roles = "Admin")]
@@ -96,7 +105,7 @@ namespace AdveChan.Controllers
             _chanContext.Threads.Remove(threadToDelete);
             _chanContext.SaveChanges();
 
-            return Redirect("Board/ShowThreads"+boardId);
+            return Redirect("Board/ShowThreads/"+boardId);
         }
 
         [Authorize(Roles = "Admin")]

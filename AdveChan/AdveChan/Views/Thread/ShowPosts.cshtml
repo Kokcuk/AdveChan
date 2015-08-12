@@ -1,11 +1,13 @@
 ﻿@using System.Text.RegularExpressions
 @using System.Web.Optimization
 @using AdveChan.Models
+@using BotDetect.Web.UI.Mvc
 @model AdveChan.ViewModels.ShowPostsModel
            <link href="@Url.Content("~/Content/PostsStyles.css")" rel="stylesheet" type="text/css"/>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
 <link rel="stylesheet" href="../../Fancybox/jquery.fancybox.css" type="text/css" media="screen"/>
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../../Fancybox/jquery.fancybox.pack.js"></script>
 <script src="../../Scripts/PictureUpoading.js"></script>
 <script src="../../Scripts/OpenImage.js"></script>
@@ -87,7 +89,6 @@
     }
 }
 @{
-    //Model.Posts.Reverse();
     foreach (var post in Model.Posts)
     {
         Regex reg = new Regex(@">>[0-9]+", RegexOptions.IgnoreCase);
@@ -112,5 +113,8 @@
         <p><input type="file" name="image" id="pic"> <input type="button" value="Upload" id="btnUpload">
         </p>
         <input type="hidden" value="" id="imgsrc" name="imgsrc">
+        @{MvcCaptcha sampleCaptcha = new MvcCaptcha("SampleCaptcha");}
+        @Html.Captcha(sampleCaptcha)
+        <p>Captcha is requiered: @Html.TextBox("CaptchaCode")</p>
     </div>
 }

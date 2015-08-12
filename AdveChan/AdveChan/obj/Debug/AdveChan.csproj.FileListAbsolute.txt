@@ -46,3 +46,5 @@ D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.dll
 D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.Mvc.dll
 D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.xml
 D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.Mvc.xml
+D:\everything\Repository\AdveChan\AdveChan\bin\BotDetect.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\BotDetect.Web.UI.Mvc.dll

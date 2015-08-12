@@ -1,5 +1,6 @@
 ﻿@using System.Security.Cryptography.X509Certificates
 @using System.Web.Optimization
+@using BotDetect.Web.UI.Mvc
 <link href="@Url.Content("~/Content/AddingThreadStyle.css")" rel="stylesheet" type="text/css">
 @{
     ViewBag.Title = "ShowAddingNewThread";
@@ -15,5 +16,8 @@
     <p>Post:<textarea class="txtarea" name="content" rows="10" cols="48" ></textarea></p>
     <input type="file" name="image" id="pic"><input type="button" value="Upload" id="btnUpload">
     <input type="hidden" value="" id="imgsrc" name="imgsrc">
+    @{MvcCaptcha sampleCaptcha = new MvcCaptcha("SampleCaptcha");}
+    @Html.Captcha(sampleCaptcha)
+   <p>Captcha is required: @Html.TextBox("CaptchaCode")</p>
 </form>
 </div>
