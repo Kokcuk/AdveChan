@@ -3,6 +3,7 @@
     ViewBag.Title = "ShowCatList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Scripts.Render("~/bundles/jqueryval");
 <style>
     .buttons{display: inline-block}
     .information {
@@ -25,7 +26,20 @@
             }
         });
 
-        $("#confirmAdding").on("click", function() {
+        function checkFields() {
+            var name = $("#txtName").val();
+            var breed = $("#txtBreed").val();
+            var age = $("#txtAge").val();
+            var weight = $("#txtWeight").val();
+            if (name.length === 0 || breed.length === null || age.length === null || weight.length === null) {
+                alert("Incorrect input data");
+                return false;
+            }
+            return true;
+        }
+
+        $("#confirmAdding").on("click", function () {
+            if (checkFields())
             $("#addingForm").slideUp();
         });
 
@@ -53,12 +67,12 @@
         $(".btnEdit").on("click", function() {
             $(".editForm").slideUp();
         });
-        
-        $(".information").each(function(index) {
+
+        $(".information").each(function (index) {
             if (index % 2 === 0) {
                 $(this).css("background", "whitesmoke");
             }
-        })
+        });
     });
 </script>
 <h2 class="showAddingForm">Cats' list</h2>
@@ -70,19 +84,19 @@
     {
         <div class="input-group ">
             <span class="input-group-addon disc" id="basic-addon1">Name:</span>
-            <input type="text" name="Name" class="form-control"/>
+            <input type="text" name="Name" class="form-control" id="txtName"/>
         </div>
         <div class="input-group">
             <span class="input-group-addon disc" id="basic-addon1">Breed:</span>
-            <input type="text" name="Breed" class="form-control"/>
+            <input type="text" name="Breed" class="form-control" id="txtBreed" />
         </div>
         <div class="input-group">
             <span class="input-group-addon disc" id="basic-addon1">Weight:</span>
-            <input type="text" name="Weight" class="form-control"/>
+            <input type="text" name="Weight" class="form-control" id="txtWeight" />
         </div>
         <div class="input-group">
             <span class="input-group-addon disc" id="basic-addon1">Age:</span>
-            <input type="text" name="Age" class="form-control"/>
+            <input type="text" name="Age" class="form-control" id="txtAge" />
         </div>
         <input type="submit" value="Add" class="btn btn-default" id="confirmAdding">
     }

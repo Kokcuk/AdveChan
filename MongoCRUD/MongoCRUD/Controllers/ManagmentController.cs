@@ -30,14 +30,17 @@ namespace MongoCRUD.Controllers
         [HttpPost]
         public ActionResult AddCat(Cat model)
         {
-            var cat = new Cat
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Age = model.Age,
-                Breed = model.Breed,
-                Weight = model.Weight,
-            };
-            _catRep.Add(cat);
+                var cat = new Cat
+                {
+                    Name = model.Name,
+                    Age = model.Age,
+                    Breed = model.Breed,
+                    Weight = model.Weight,
+                };
+                _catRep.Add(cat);
+            }
             return RedirectToAction("ShowCatList");
         }
 
@@ -52,12 +55,15 @@ namespace MongoCRUD.Controllers
         [HttpPost]
         public ActionResult EditCat(Cat model)
         {
-            var catToEdit = _catRep.GetById(model.Id);
-            catToEdit.Name = model.Name;
-            catToEdit.Age = model.Age;
-            catToEdit.Breed = model.Breed;
-            catToEdit.Weight = model.Weight;
-            _catRep.Update(catToEdit);
+            if (ModelState.IsValid)
+            {
+                var catToEdit = _catRep.GetById(model.Id);
+                catToEdit.Name = model.Name;
+                catToEdit.Age = model.Age;
+                catToEdit.Breed = model.Breed;
+                catToEdit.Weight = model.Weight;
+                _catRep.Update(catToEdit);
+            }
             return RedirectToAction("ShowCatList");
         }
     }
