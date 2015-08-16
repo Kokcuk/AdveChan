@@ -9,6 +9,7 @@ using AdveChan.Projections;
 using AdveChan.ViewModels;
 using BotDetect.Web.UI.Mvc;
 using MongoRepository;
+
 namespace AdveChan.Controllers
 {
     public class ThreadController : Controller
@@ -18,7 +19,7 @@ namespace AdveChan.Controllers
 
         public ThreadController()
         {
-            _chanContext=new ChanContext();
+            _chanContext = new ChanContext();
             _threadsCash = new MongoRepository<Cash>();
         }
 
@@ -41,7 +42,7 @@ namespace AdveChan.Controllers
                 };
                 var url = model.Imgsrc;
                 if (url != null) url = url.Remove(0, 1);
-                thread.Posts.Add(new Post
+                var postToAdd = new Post
                 {
                     ThreadId = thread.Id,
                     Email = model.Email,
@@ -50,10 +51,19 @@ namespace AdveChan.Controllers
                     ImagesUrl = url,
                     Content = model.Content,
                     Ip = Request.UserHostAddress
-                });
+                };
+                thread.Posts.Add(postToAdd);
                 _chanContext.Threads.Add(thread);
                 _chanContext.SaveChanges();
-                List<ThreadWithPosts> threadsList=_threadsCash.FirstOrDefault(x => x.CashedBoardId == model.BoardId)
+
+                _threadsCash.FirstOrDefault(x => x.CashedBoardId == model.BoardId)
+                    .CashedThreads.Add(new ThreadWithPosts
+                    {
+                        Id = thread.Id,
+                        OpPost = postToAdd,
+                        Update = postToAdd.Time
+                    });
+                List<ThreadWithPosts> threadsList = _threadsCash.FirstOrDefault(x => x.CashedBoardId == model.BoardId)
                     .CashedThreads
                     .OrderByDescending(x => x.Update).Take(50).ToList();
                 var cashedEntityToUpdate = _threadsCash.FirstOrDefault(x => x.CashedBoardId == model.BoardId);
@@ -66,7 +76,7 @@ namespace AdveChan.Controllers
 
         public ActionResult ShowPosts(int id)
         {
-            List < Post > posts= _chanContext.Posts.Where(x => x.ThreadId == id).ToList();
+            List<Post> posts = _chanContext.Posts.Where(x => x.ThreadId == id).ToList();
             var model = new ShowPostsModel
             {
                 Posts = posts,
@@ -76,7 +86,7 @@ namespace AdveChan.Controllers
         }
 
         [HttpPost]
-        [CaptchaValidation("CaptchaCode","SampleCaptcha","Incorrect CAPTCHA code!")]
+        [CaptchaValidation("CaptchaCode", "SampleCaptcha", "Incorrect CAPTCHA code!")]
         public ActionResult AddPost(AddPostModel model)
         {
             if (!ModelState.IsValid)
@@ -107,8 +117,7 @@ namespace AdveChan.Controllers
                     _chanContext.Posts.Add(post);
                     _chanContext.SaveChanges();
 
-                    CashLastPosts(model.ThreadId,post);
-                   
+                    CashLastPosts(model.ThreadId, post);
                 }
                 return RedirectToAction("ShowPosts", "Thread", new {id = model.ThreadId});
             }
@@ -117,10 +126,10 @@ namespace AdveChan.Controllers
         private void CashLastPosts(int threadId, Post post)
         {
             var boardId =
-                       _chanContext.Threads
-                       .Where(x => x.Id == threadId)
-                       .Select(x => x.BoardId)
-                       .FirstOrDefault();
+                _chanContext.Threads
+                    .Where(x => x.Id == threadId)
+                    .Select(x => x.BoardId)
+                    .FirstOrDefault();
             var cashEntity = _threadsCash.FirstOrDefault(x => x.CashedBoardId == boardId);
             if (cashEntity.CashedThreads.Any(x => x.Id == threadId))
             {
@@ -129,7 +138,7 @@ namespace AdveChan.Controllers
                     .LastPosts.OrderByDescending(x => x.Time).ToList();
                 listOfLastPosts.RemoveAt(0);
                 listOfLastPosts.Add(post);
-
+                cashEntity.CashedThreads.FirstOrDefault(x => x.Id == threadId).Update = post.Time;
                 cashEntity.CashedThreads.FirstOrDefault(x => x.Id == threadId).LastPosts = listOfLastPosts;
                 cashEntity.CashedBoardId = boardId;
                 _threadsCash.Update(cashEntity);
@@ -145,7 +154,7 @@ namespace AdveChan.Controllers
             _chanContext.Threads.Remove(threadToDelete);
             _chanContext.SaveChanges();
 
-            return Redirect("Board/ShowThreads/"+boardId);
+            return Redirect("Board/ShowThreads/" + boardId);
         }
 
         [Authorize(Roles = "Admin")]
@@ -157,7 +166,7 @@ namespace AdveChan.Controllers
             _chanContext.Posts.Remove(postToDelete);
             _chanContext.SaveChanges();
 
-            return Redirect("/Thread/ShowPosts/"+threadId);
+            return Redirect("/Thread/ShowPosts/" + threadId);
         }
 
         [Authorize(Roles = "Admin")]

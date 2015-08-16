@@ -26,24 +26,6 @@ namespace AdveChan.Controllers
         {
             int pageSize = 10;
             ViewData["BoardId"] = id;
-            //List<ThreadWithPosts> threadsWithPost = _chanContext.Threads
-            //    .Where(x => x.BoardId == id).Select(x => new ThreadWithPosts
-            //    {
-            //        Id = x.Id,
-            //        LastPosts = x.Posts.OrderByDescending(p => p.Time).Take(3).ToList(),
-            //        OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
-            //        Update = x.Posts.OrderByDescending(p => p.Time).Take(1).FirstOrDefault().Time
-            //    }).OrderByDescending(x => x.Update).ToList();
-            //if (page > 0 && page < 5)
-            //{
-            //    if (threadsWithPost.Count() > page * pageSize)
-            //        threadsWithPost.RemoveRange((int)(page * pageSize - pageSize), pageSize);
-            //}
-            //var model = new ThreadModel
-            //{
-            //    Threads = threadsWithPost.Take(10).ToList(),
-            //    BoardsName = _chanContext.Boards.Where(x => x.Id == id).Select(x => x.Name).FirstOrDefault()
-            //};
 
             if (_threadsCash.Any(x => x.CashedBoardId == id))
             {
@@ -60,7 +42,9 @@ namespace AdveChan.Controllers
             }
             var model = new ThreadModel
             {
-                Threads = _threadsCash.FirstOrDefault(x => x.CashedBoardId == id).CashedThreads.Skip((page * pageSize) ?? 0).Take(pageSize).ToList(),
+                Threads = _threadsCash.FirstOrDefault(x => x.CashedBoardId == id).CashedThreads
+                    .OrderByDescending(x => x.Update)
+                    .Skip((page*pageSize) ?? 0).Take(pageSize).ToList(),
                 BoardsName = _chanContext.Boards.Where(x => x.Id == id).Select(x => x.Name).FirstOrDefault()
             };
             return View(model);
@@ -69,13 +53,13 @@ namespace AdveChan.Controllers
         private void AddToCash(int id)
         {
             List<ThreadWithPosts> threadsWithPost = _chanContext.Threads
-            .Where(x => x.BoardId == id).Select(x => new ThreadWithPosts
-        {
-                Id = x.Id,
-                LastPosts = x.Posts.OrderByDescending(p => p.Time).Take(3).ToList(),
-                OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
-                Update = x.Posts.OrderByDescending(p => p.Time).Take(1).FirstOrDefault().Time
-        }).OrderByDescending(x => x.Update).ToList();
+                .Where(x => x.BoardId == id).Select(x => new ThreadWithPosts
+                {
+                    Id = x.Id,
+                    LastPosts = x.Posts.OrderByDescending(p => p.Time).Take(3).ToList(),
+                    OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
+                    Update = x.Posts.OrderByDescending(p => p.Time).Take(1).FirstOrDefault().Time
+                }).OrderByDescending(x => x.Update).ToList();
             var entityToCash = new Cash
             {
                 CashedThreads = threadsWithPost,
@@ -87,15 +71,15 @@ namespace AdveChan.Controllers
         private void UpdateCash(int id)
         {
             List<ThreadWithPosts> threadsWithPost = _chanContext.Threads
-           .Where(x => x.BoardId == id).Select(x => new ThreadWithPosts
-           {
-               Id = x.Id,
-               LastPosts = x.Posts.OrderByDescending(p => p.Time).Take(3).ToList(),
-               OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
-               Update = x.Posts.OrderByDescending(p => p.Time).Take(1).FirstOrDefault().Time
-           }).OrderByDescending(x => x.Update).ToList();
+                .Where(x => x.BoardId == id).Select(x => new ThreadWithPosts
+                {
+                    Id = x.Id,
+                    LastPosts = x.Posts.OrderByDescending(p => p.Time).Take(3).ToList(),
+                    OpPost = x.Posts.OrderBy(p => p.Time).Take(1).FirstOrDefault(),
+                    Update = x.Posts.OrderByDescending(p => p.Time).Take(1).FirstOrDefault().Time
+                }).OrderByDescending(x => x.Update).ToList();
 
-            var entityToUpdate= _threadsCash.FirstOrDefault(x => x.CashedBoardId == id);
+            var entityToUpdate = _threadsCash.FirstOrDefault(x => x.CashedBoardId == id);
             entityToUpdate.CashedBoardId = id;
             entityToUpdate.CashedThreads = threadsWithPost;
             _threadsCash.Update(entityToUpdate);

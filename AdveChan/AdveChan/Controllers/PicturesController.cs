@@ -36,16 +36,12 @@ namespace AdveChan.Controllers
                     imagefileThumb.Save(filePathThumb, ImageFormat.Jpeg);
                     TempData["ImageUrl"] = filePath;
                     return Content(String.Format("/Images/{0}/{1}", directoryName, fileNameThumb));
-                    //return null;
                 }
                 catch (Exception exception)
                 {
-
-                    //  return Content("Error while loading picture");
                     return null;
                 }
             }
-            //return Content("Error! No file to load");
             return null;
         }
     }
