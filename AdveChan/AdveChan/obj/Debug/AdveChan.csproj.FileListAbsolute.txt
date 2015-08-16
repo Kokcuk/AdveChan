@@ -48,3 +48,9 @@ D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.xml
 D:\everything\Repository\AdveChan\AdveChan\bin\PagedList.Mvc.xml
 D:\everything\Repository\AdveChan\AdveChan\bin\BotDetect.dll
 D:\everything\Repository\AdveChan\AdveChan\bin\BotDetect.Web.UI.Mvc.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\MongoDB.Bson.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\MongoDB.Driver.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\MongoRepository.Net45.dll
+D:\everything\Repository\AdveChan\AdveChan\bin\MongoDB.Bson.xml
+D:\everything\Repository\AdveChan\AdveChan\bin\MongoDB.Driver.xml
+D:\everything\Repository\AdveChan\AdveChan\bin\MongoRepository.Net45.xml

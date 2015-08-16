@@ -12,7 +12,6 @@ namespace AdveChan.Controllers
 {
     public class PicturesController : Controller
     {
-        //TO DO: clean code
         [HttpPost]
         public ActionResult LoadingPicture(HttpPostedFileBase image)
         {

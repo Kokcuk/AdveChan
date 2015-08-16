@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Protocols;
 using AdveChan.Models;
+using AdveChan.Projections;
 using AdveChan.ViewModels;
 using BotDetect.Web.UI.Mvc;
-
+using MongoRepository;
 namespace AdveChan.Controllers
 {
     public class ThreadController : Controller
     {
         private readonly ChanContext _chanContext;
+        private readonly MongoRepository<Cash> _threadsCash;
 
         public ThreadController()
         {
             _chanContext=new ChanContext();
+            _threadsCash = new MongoRepository<Cash>();
         }
 
         [HttpPost]
         [CaptchaValidation("CaptchaCode", "SampleCaptcha", "Incorrect CAPTCHA code!")]
         public ActionResult Create(AddThreadModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return Redirect("/StartPage/ShowStartPage");
+            }
             if (CheckForBan(Request.UserHostAddress))
             {
                 var board = _chanContext.Boards.FirstOrDefault(x => x.Id == model.BoardId);
@@ -45,6 +53,13 @@ namespace AdveChan.Controllers
                 });
                 _chanContext.Threads.Add(thread);
                 _chanContext.SaveChanges();
+                List<ThreadWithPosts> threadsList=_threadsCash.FirstOrDefault(x => x.CashedBoardId == model.BoardId)
+                    .CashedThreads
+                    .OrderByDescending(x => x.Update).Take(50).ToList();
+                var cashedEntityToUpdate = _threadsCash.FirstOrDefault(x => x.CashedBoardId == model.BoardId);
+                cashedEntityToUpdate.CashedBoardId = model.BoardId;
+                cashedEntityToUpdate.CashedThreads = threadsList;
+                _threadsCash.Update(cashedEntityToUpdate);
             }
             return Redirect("/Board/ShowThreads/" + model.BoardId);
         }
@@ -91,8 +106,33 @@ namespace AdveChan.Controllers
                     }
                     _chanContext.Posts.Add(post);
                     _chanContext.SaveChanges();
+
+                    CashLastPosts(model.ThreadId,post);
+                   
                 }
                 return RedirectToAction("ShowPosts", "Thread", new {id = model.ThreadId});
+            }
+        }
+
+        private void CashLastPosts(int threadId, Post post)
+        {
+            var boardId =
+                       _chanContext.Threads
+                       .Where(x => x.Id == threadId)
+                       .Select(x => x.BoardId)
+                       .FirstOrDefault();
+            var cashEntity = _threadsCash.FirstOrDefault(x => x.CashedBoardId == boardId);
+            if (cashEntity.CashedThreads.Any(x => x.Id == threadId))
+            {
+                List<Post> listOfLastPosts = cashEntity.CashedThreads
+                    .FirstOrDefault(x => x.Id == threadId)
+                    .LastPosts.OrderByDescending(x => x.Time).ToList();
+                listOfLastPosts.RemoveAt(0);
+                listOfLastPosts.Add(post);
+
+                cashEntity.CashedThreads.FirstOrDefault(x => x.Id == threadId).LastPosts = listOfLastPosts;
+                cashEntity.CashedBoardId = boardId;
+                _threadsCash.Update(cashEntity);
             }
         }
 

@@ -4,7 +4,7 @@
 @model AdveChan.ViewModels.ThreadModel
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
-<link rel="stylesheet" href="../../Fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../Fancybox/jquery.fancybox.css" type="text/css" media="screen"/>
 <script type="text/javascript" src="../../Fancybox/jquery.fancybox.pack.js"></script>
 <script src="../../Scripts/OpenImage.js"></script>
 <link href="@Url.Content("~/Content/ThreadsStyle.css")" rel="stylesheet" type="text/css">
@@ -13,16 +13,26 @@
     Layout = "~/Views/_BasicLayout.cshtml";
 }
 <h1 align="center">@Model.BoardsName</h1>
-<br><div class="newthread"><a class="AddingNewThread" href="/Board/ShowAddingNewThread/">[ Add new thread ]</a></div>
+<br>
+<div class="newthread">
+    <a class="AddingNewThread" href="/Board/ShowAddingNewThread/@ViewData["BoardId"]">[ Add new thread ]</a>
+</div>
 @foreach (ThreadWithPosts thread in Model.Threads)
 {
     thread.LastPosts.Reverse();
     string url = String.Empty;
     if (thread.OpPost.ImagesUrl != null)
-    { url = thread.OpPost.ImagesUrl.Remove(thread.OpPost.ImagesUrl.IndexOf("_thumb"), "_thumb".Length); }
+    {
+        url = thread.OpPost.ImagesUrl.Remove(thread.OpPost.ImagesUrl.IndexOf("_thumb"), "_thumb".Length);
+    }
     <div class="OpPost">
-        <p> E-mail: @thread.OpPost.Email Title:@thread.OpPost.Title #@thread.OpPost.Id Time: @thread.OpPost.Time<a class="answer" href="/Thread/ShowPosts/@thread.Id"> [Answer]</a></p>
-        <p><a class="fancybox" href="@url"><img src="@thread.OpPost.ImagesUrl" align="top" /></a> @thread.OpPost.Content</p>
+        <p>
+            E-mail: @thread.OpPost.Email Title:@thread.OpPost.Title #@thread.OpPost.Id Time: @thread.OpPost.Time<a class="answer" href="/Thread/ShowPosts/@thread.Id"> [Answer]</a>
+        </p>
+        <p>
+            <a class="fancybox" href="@url">
+                <img src="@thread.OpPost.ImagesUrl" align="top"/>
+            </a> @thread.OpPost.Content</p>
     </div>
     foreach (var lastPost in thread.LastPosts)
     {
@@ -35,10 +45,13 @@
             }
             <div class="lastposts">
                 E-mail:@lastPost.Email Title:@lastPost.Title #@lastPost.Id Time: @thread.OpPost.Time
-                <p><a class="fancybox" href="@innerurl"><img src="@lastPost.ImagesUrl" align="top"></a>
+                <p>
+                    <a class="fancybox" href="@innerurl">
+                        <img src="@lastPost.ImagesUrl" align="top">
+                    </a>
                     <div class="Content">@lastPost.Content</div>
                 </p>
-                
+
             </div>
         }
     }
@@ -51,5 +64,6 @@
         }
     }
 }
-<p>[<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "0"})>0</a>][<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "1"})>1</a>][<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "2"})>2</a>][<a href=@Url.Action("ShowThreads", "Board", new {id = TempData["BoardId"], page = "3"})>3</a>][<a href=@Url.Action("ShowThreads","Board",new{id=TempData["BoardId"], page="4"})>4</a>]</p>
-
+<p>
+    [<a href=@Url.Action("ShowThreads", "Board", new {id = ViewData["BoardId"], page = "0"})>0</a>][<a href=@Url.Action("ShowThreads", "Board", new { id = ViewData["BoardId"], page = "1" })>1</a>][<a href=@Url.Action("ShowThreads", "Board", new { id = ViewData["BoardId"], page = "2" })>2</a>][<a href=@Url.Action("ShowThreads", "Board", new { id = ViewData["BoardId"], page = "3" })>3</a>][<a href=@Url.Action("ShowThreads", "Board", new { id = ViewData["BoardId"], page = "4" })>4</a>]
+</p>
