@@ -1,0 +1,34 @@
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Text Editor.exe.config
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Text Editor.exe
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Text Editor.pdb
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Text Editor.csprojResolveAssemblyReference.cache
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Views\EditorView.baml
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Views\OpenView.baml
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Views\SaveView.baml
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Views\EditorView.g.cs
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Views\OpenView.g.cs
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Views\SaveView.g.cs
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\App.g.cs
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Text Editor_MarkupCompile.cache
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Text Editor.g.resources
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\TextEditor.Properties.Resources.resources
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Text Editor.csproj.GenerateResource.Cache
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Text Editor.exe
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Text Editor.pdb
+D:\everything\Repository\TextEditor_koks\Text Editor\obj\Debug\Text Editor_MarkupCompile.lref
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Xceed.Wpf.AvalonDock.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Xceed.Wpf.DataGrid.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\Xceed.Wpf.Toolkit.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+D:\everything\Repository\TextEditor_koks\Text Editor\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll

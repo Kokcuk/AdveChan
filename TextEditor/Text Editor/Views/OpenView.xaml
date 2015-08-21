@@ -1,0 +1,29 @@
+﻿<Window x:Class="TextEditor.Views.OpenView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="List of documents" Height="300" Width="300">
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30">
+                </RowDefinition>
+        </Grid.RowDefinitions>
+            <ListView Name="ListView" Margin="5" Grid.Row="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}">
+            <ListView.View>
+                <GridView>
+                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                    <GridViewColumn Header="Last changed" DisplayMemberBinding="{Binding TimeOfChanging}">
+                        </GridViewColumn>
+                </GridView>
+        </ListView.View>
+            </ListView>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Content="Open" Margin="3" Command="{Binding OpenCommand}">
+                </Button>
+            <Button Content="Delete" Margin="3" Command="{Binding DeleteCommand}">
+                </Button>
+        </StackPanel>
+    </Grid>
+    
+</Window>
