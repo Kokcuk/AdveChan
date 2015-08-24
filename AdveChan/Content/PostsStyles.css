@@ -1,0 +1,20 @@
+﻿div.posts {
+    background-color: #fff0f5;
+    border: 1px solid black;
+    margin-left: 50px;
+    margin-right:400px;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-top: 2px;
+}
+div.newpost {
+    margin-left: 100px;
+    margin-right: 600px;
+}
+div.admin {
+    margin-left: 50px;
+}
+.hid {
+    display: none;
+    position: absolute;
+}

@@ -1,0 +1,131 @@
+﻿@using System.Text.RegularExpressions
+@using System.Web.Optimization
+@using AdveChan.Models
+@using BotDetect.Web.UI.Mvc
+@model AdveChan.ViewModels.ShowPostsModel
+<link href="@Url.Content("~/Content/PostsStyles.css")" rel="stylesheet" type="text/css"/>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+<link rel="stylesheet" href="../../Fancybox/jquery.fancybox.css" type="text/css" media="screen"/>
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../Fancybox/jquery.fancybox.pack.js"></script>
+<script src="../../Scripts/PictureUpoading.js"></script>
+<script src="../../Scripts/OpenImage.js"></script>
+<script src="../../Scripts/AnswerSystem.js"></script>
+<script type="text/javascript">
+    function ChangeStyle(E) {
+        document.getElementById(E).style.color = "mediumblue";
+    }
+</script>
+<script type="text/javascript">
+    function CreateLinks(target, attr, value) {
+        var ahref = document.createElement("a");
+        ahref.setAttribute("href", "#" + attr);
+        ahref.setAttribute("id", "scroll");
+        var t = document.createTextNode(value + " ");
+        ahref.appendChild(t);
+        document.getElementById(target).appendChild(ahref);
+
+    }
+</script>
+@{
+    ViewBag.Title = "ShowPosts";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+@foreach (var p in Model.Posts)
+{
+    string url = p.ImagesUrl;
+    if (url != null)
+    {
+        url = p.ImagesUrl.Remove(p.ImagesUrl.IndexOf("_thumb"), "_thumb".Length);
+    }
+    else
+    {
+        url = null;
+    }
+    Regex reg = new Regex(@">>[0-9]+", RegexOptions.IgnoreCase);
+    MatchCollection matches = reg.Matches(p.Content);
+    p.Content = reg.Replace(p.Content, "");
+    <div class="posts" id="@p.Id">
+        <p>Email:@p.Email Title:@p.Title <a name="@p.Id" href="#" onclick="document.getElementById('txtAreaContent').innerHTML += '>>' + this.name">@p.Id</a> Time:@p.Time</p>
+        <p id="@p.Id">
+            <a class="fancybox" href="@url">
+                <img src="@p.ImagesUrl" align="top"/>
+            </a>@foreach (var mt in matches)
+                {
+                    var postId = mt.ToString().Remove(0, 2);
+                    var show = postId + "s";
+                    <a id="scroll" href="#@postId" class="link" onclick="ChangeStyle('@postId')">@mt.ToString()</a>
+                    <div id="@show" class="hid"></div>
+                } @p.Content</p>@{
+                                    var answers = p.Id + "a";
+                                    var ss = p.Id + "ss";
+                                    <div id="@answers"></div>
+                                    <div id="@ss" class="hid"></div>
+                                }
+        @{
+            foreach (var match in matches)
+            {
+                p.Content += match.ToString();
+            }
+        }
+    </div>
+    if (User.IsInRole("Admin"))
+    {
+        using (Html.BeginForm("DeletePost", "Thread", FormMethod.Post))
+        {
+            <div class="admin">
+                <input type="hidden" name="id" value="@p.Id">
+                <input type="submit" value="Delete">
+            </div>
+        }
+        using (Html.BeginForm("AddBan", "Thread", FormMethod.Post))
+        {
+            <div class="admin">
+                <input type="hidden" name="ip" value="@p.Ip">
+                <p>
+                    Terms of ban:<select name="terms">
+                        <option selected> day
+                        <option> week
+                        <option> month
+                        <option>year
+                    </select>
+                    <input type="submit" value="Ban">
+                </p>
+            </div>
+        }
+    }
+}
+@{
+    foreach (var post in Model.Posts)
+    {
+        Regex reg = new Regex(@">>[0-9]+", RegexOptions.IgnoreCase);
+        MatchCollection matches = reg.Matches(post.Content);
+        foreach (var match in matches)
+        {
+            var postId = match.ToString().Remove(0, 2);
+            var target = postId + "a";
+            <script type="text/javascript">CreateLinks('@target', '@post.Id', '@post.Id')</script>
+        }
+    }
+}
+@using (Html.BeginForm("AddPost", "Thread", FormMethod.Post))
+{
+    <div class="newpost">
+        <h3>Reply:</h3>
+        <input type="hidden" value="@Model.ThreadId" name="ThreadId"/>
+        <p>
+            Email: <input type="text" name="Email" id="Email">Title: <input type="text" name="Title" id="Title"><input type="submit" value="Send">
+        </p>
+        <p>
+            <textarea name="Content" id="txtAreaContent" rows="8" cols="50"></textarea>
+        </p>
+        <p>
+            <input type="file" name="image" id="pic"> <input type="button" value="Upload" id="btnUpload">
+        </p>
+        <input type="hidden" value="" id="imgsrc" name="imgsrc">
+        @{ MvcCaptcha sampleCaptcha = new MvcCaptcha("SampleCaptcha"); }
+        @Html.Captcha(sampleCaptcha)
+        <p>Captcha is requiered: @Html.TextBox("CaptchaCode")</p>
+    </div>
+}
