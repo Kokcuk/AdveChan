@@ -42,12 +42,6 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="BotDetect">
-      <HintPath>..\packages\Captcha.3.0.16.0\lib\net45\BotDetect.dll</HintPath>
-    </Reference>
-    <Reference Include="BotDetect.Web.UI.Mvc">
-      <HintPath>..\packages\Captcha.3.0.16.0\lib\net45\BotDetect.Web.UI.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -61,15 +55,6 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MongoDB.Bson">
-      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoRepository.Net45">
-      <HintPath>..\packages\MongoRepository.1.6.8\lib\net45\MongoRepository.Net45.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -79,6 +64,15 @@
     </Reference>
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\packages\SimpleInjector.3.0.1\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.3.0.1\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.3.0.2\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -127,108 +121,68 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\AddingThreadStyle.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\LayoutStyles.css" />
-    <Content Include="Content\PagedList.css" />
-    <Content Include="Content\PostsStyles.css" />
-    <Content Include="Content\StartPage.css" />
-    <Content Include="Content\ThreadsStyle.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\site.css" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="MongoRepository.chm" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Icon.png" />
     <Content Include="Scripts\AnswerSystem.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\OpenImage.js" />
     <Content Include="Scripts\PictureUpoading.js" />
-    <Content Include="Fancybox\blank.gif" />
-    <Content Include="Fancybox\fancybox_loading%402x.gif" />
-    <Content Include="Fancybox\fancybox_loading.gif" />
-    <Content Include="Fancybox\fancybox_overlay.png" />
-    <Content Include="Fancybox\fancybox_sprite%402x.png" />
-    <Content Include="Fancybox\fancybox_sprite.png" />
-    <Content Include="Fancybox\helpers\fancybox_buttons.png" />
-    <Content Include="Fancybox\helpers\jquery.fancybox-buttons.css" />
-    <Content Include="Fancybox\helpers\jquery.fancybox-buttons.js" />
-    <Content Include="Fancybox\helpers\jquery.fancybox-media.js" />
-    <Content Include="Fancybox\helpers\jquery.fancybox-thumbs.css" />
-    <Content Include="Fancybox\helpers\jquery.fancybox-thumbs.js" />
-    <Content Include="Fancybox\jquery.fancybox.css" />
-    <Content Include="Fancybox\jquery.fancybox.js" />
-    <Content Include="Fancybox\jquery.fancybox.pack.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\IocContainer.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BoardController.cs" />
-    <Compile Include="Controllers\PicturesController.cs" />
-    <Compile Include="Controllers\StartPageController.cs" />
-    <Compile Include="Controllers\ThreadController.cs" />
+    <Compile Include="Common\DefaultCryptoProvider.cs" />
+    <Compile Include="Common\ICryptoProvider.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageHelper.cs" />
-    <Compile Include="Migrations\201507162144582_Init.cs" />
-    <Compile Include="Migrations\201507162144582_Init.Designer.cs">
-      <DependentUpon>201507162144582_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507182015240_Migration1.cs" />
-    <Compile Include="Migrations\201507182015240_Migration1.Designer.cs">
-      <DependentUpon>201507182015240_Migration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507282249437_BanAdmin290715.cs" />
-    <Compile Include="Migrations\201507282249437_BanAdmin290715.Designer.cs">
-      <DependentUpon>201507282249437_BanAdmin290715.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507291742206_Admin290715.cs" />
-    <Compile Include="Migrations\201507291742206_Admin290715.Designer.cs">
-      <DependentUpon>201507291742206_Admin290715.cs</DependentUpon>
+    <Compile Include="Migrations\201508241600407_init.cs" />
+    <Compile Include="Migrations\201508241600407_init.Designer.cs">
+      <DependentUpon>201508241600407_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Admin.cs" />
-    <Compile Include="Models\Ban.cs" />
-    <Compile Include="Models\Board.cs" />
-    <Compile Include="Models\Cash.cs" />
-    <Compile Include="Models\ChanContext.cs" />
-    <Compile Include="Models\EntityBase.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\Thread.cs" />
-    <Compile Include="Projections\ThreadWithPosts.cs" />
+    <Compile Include="Entities\Board.cs" />
+    <Compile Include="Entities\ChanContext.cs" />
+    <Compile Include="Entities\EntityBase.cs" />
+    <Compile Include="Entities\Post.cs" />
+    <Compile Include="Entities\Thread.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AddPostModel.cs" />
-    <Compile Include="ViewModels\AddThreadModel.cs" />
-    <Compile Include="ViewModels\BoardModel.cs" />
-    <Compile Include="ViewModels\ShowPostsModel.cs" />
-    <Compile Include="ViewModels\ThreadModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\_BasicLayout.cshtml" />
-    <Content Include="Views\StartPage\ShowStartPage.cshtml" />
-    <Content Include="Views\Board\ShowThreads.cshtml" />
-    <Content Include="Views\Board\ShowAddingNewThread.cshtml" />
-    <Content Include="Views\Thread\ShowPosts.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <None Include="Views\Admin\Boards.cshtml" />
+    <None Include="Views\Admin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -237,23 +191,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Entities\Projections\" />
     <Folder Include="Images\" />
-    <Folder Include="Views\Pictures\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507162144582_Init.resx">
-      <DependentUpon>201507162144582_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507182015240_Migration1.resx">
-      <DependentUpon>201507182015240_Migration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507282249437_BanAdmin290715.resx">
-      <DependentUpon>201507282249437_BanAdmin290715.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507291742206_Admin290715.resx">
-      <DependentUpon>201507291742206_Admin290715.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508241600407_init.resx">
+      <DependentUpon>201508241600407_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

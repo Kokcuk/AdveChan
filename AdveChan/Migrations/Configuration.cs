@@ -4,15 +4,16 @@ namespace AdveChan.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Entities;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AdveChan.Models.ChanContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ChanContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AdveChan.Models.ChanContext context)
+        protected override void Seed(ChanContext context)
         {
             //  This method will be called after migrating to the latest version.
 

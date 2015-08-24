@@ -22,7 +22,11 @@ namespace AdveChan.App_Start
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+#if DEBUG
+            BundleTable.EnableOptimizations = false;
+#else
             BundleTable.EnableOptimizations = true;
+#endif
         }
     }
 }

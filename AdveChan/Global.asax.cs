@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using System.Web.Security;
-using AdveChan.App_Start;
-using AdveChan.Models;
-
-namespace AdveChan
+﻿namespace AdveChan
 {
-    public class MvcApplication : System.Web.HttpApplication
+    using System;
+    using System.Security.Principal;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Optimization;
+    using System.Web.Routing;
+    using System.Web.Security;
+    using App_Start;
+
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -20,34 +17,30 @@ namespace AdveChan
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            IocContainer.Configure();
         }
 
-        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
-            if (FormsAuthentication.CookiesSupported)
-            {
-                if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)
-                {
-                    try
-                    {
-                        string username =
-                            FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName]
-                                .Value).Name;
-                        string roles = String.Empty;
-                        using (ChanContext chancontext = new ChanContext())
-                        {
-                            Admin admin = chancontext.Admins.SingleOrDefault(a => a.Login == username);
-                            roles = admin.Role;
-                        }
-                        HttpContext.Current.User = new GenericPrincipal(
-                            new GenericIdentity(username,"Forms"),roles.Split(';') );
-                    }
-                    catch (Exception)
-                    {
+            HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie == null || authCookie.Value == "")
+                return;
 
-                    }
-                }
+            FormsAuthenticationTicket authTicket;
+            try
+            {
+                authTicket = FormsAuthentication.Decrypt(authCookie.Value);
             }
+            catch
+            {
+                return;
+            }
+
+            // retrieve roles from UserData
+            string[] roles = authTicket.UserData.Split(';');
+
+            if (Context.User != null)
+                Context.User = new GenericPrincipal(Context.User.Identity, roles);
         }
     }
 }
